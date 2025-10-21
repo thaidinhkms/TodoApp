@@ -114,7 +114,7 @@ export class AuthService implements IAuthService {
     const signatureBytes = forge.util.decode64(signature);
 
     const verified = pub.verify(md.digest().getBytes(), signatureBytes);
-    if (!verified) return err('Biometrics verification failed')
+    if (!verified) return err('Biometrics verification failed');
     return ok();
   }
 

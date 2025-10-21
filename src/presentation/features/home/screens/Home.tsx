@@ -54,9 +54,9 @@ function Home() {
   };
 
   const toggleDone = async (item: Todo) => {
-    await editTodo.execute({...item, done: !item.done})
+    await editTodo.execute({ ...item, done: !item.done });
     await refresh();
-  }
+  };
 
   const openEdit = (item: Todo) => {
     setEditing(item);
@@ -98,7 +98,7 @@ function Home() {
         style={styles.input}
         placeholderTextColor="#888"
       />
-      <Button title="Add Todo" onPress={onAdd} />
+      <Button title="Add Todo" onPress={onAdd} disabled={!text.length} />
 
       <FlatList
         data={todos}

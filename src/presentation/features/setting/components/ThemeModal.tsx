@@ -10,8 +10,7 @@ import { View } from '../../../components/View';
 import { Text } from '../../../components/Text';
 import { useThemedStyles } from '../../../themes/useThemedStyle';
 import { useTheme } from '../../../providers/ThemeProvider';
-
-type Scheme = 'light' | 'dark' | 'system';
+import { ThemeName } from '../../../themes/tokens';
 
 type ThemeModalProps = {
   visible: boolean;
@@ -68,13 +67,13 @@ export const ThemeModal = ({ visible, onClose }: ThemeModalProps) => {
 
   const { preference, setPreference } = useTheme();
 
-  const choices: { key: Scheme; label: string }[] = [
+  const choices: { key: ThemeName; label: string }[] = [
     { key: 'light', label: 'Light' },
     { key: 'dark', label: 'Dark' },
     { key: 'system', label: 'System' },
   ];
 
-  const selectScheme = (scheme: Scheme) => {
+  const selectScheme = (scheme: ThemeName) => {
     setPreference(scheme);
     onClose();
   };

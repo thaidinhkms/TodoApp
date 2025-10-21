@@ -45,11 +45,14 @@ export default function SettingScreen() {
 
   const onClearStorage = async () => {
     await storage.clearAll();
-  }
+  };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.optionTouch} onPress={() => setModalVisible(true)}>
+      <TouchableOpacity
+        style={styles.optionTouch}
+        onPress={() => setModalVisible(true)}
+      >
         <View style={styles.optionTextRow}>
           <Text>Theme</Text>
           <Icon as={ChevronRight} />
@@ -57,9 +60,12 @@ export default function SettingScreen() {
       </TouchableOpacity>
 
       <Button title="Log out" onPress={onLogout} />
-      <Button title="Clear data" variant='danger' onPress={onClearStorage} />
+      <Button title="Clear data" variant="danger" onPress={onClearStorage} />
 
-      <ThemeModal visible={modalVisible} onClose={() => setModalVisible(false)} />
+      <ThemeModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      />
     </View>
   );
 }
