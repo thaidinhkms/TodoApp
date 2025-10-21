@@ -9,6 +9,9 @@ export type ColorTokens = {
   success: string;
   danger: string;
   shadow: string;
+  disabledBackground: string;
+  disabledText: string;
+  disabledBorder: string;
 };
 
 export type TypographyTokens = {

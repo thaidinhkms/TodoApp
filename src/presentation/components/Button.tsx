@@ -18,40 +18,51 @@ export const Button = ({
   variant = 'primary',
   type = 'contained',
   style,
+  disabled,
   ...props
 }: Props) => {
   const { theme } = useTheme();
+
   const variantColor =
     variant === 'danger' ? theme.colors.danger : theme.colors.primary;
-  const background = type === 'outlined' ? 'transparent' : variantColor;
-  const color = type === 'contained' ? theme.colors.background : theme.colors.primary;
-  const border =
-    type === 'outlined'
-      ? {
-          borderWidth: 1,
-          borderColor: theme.colors.border,
-          padding: theme.spacing.sm,
-        }
+
+  const isOutlined = type === 'outlined';
+  const isContained = type === 'contained';
+
+  let backgroundColor = isOutlined ? 'transparent' : variantColor;
+  let textColor = isContained ? theme.colors.background : variantColor;
+  let borderStyle = isOutlined
+    ? { borderWidth: 1, borderColor: variantColor }
+    : {};
+
+  // Apply universal disabled style
+  if (disabled) {
+    backgroundColor = theme.colors.disabledBackground ?? theme.colors.border;
+    textColor = theme.colors.disabledText;
+    borderStyle = isOutlined
+      ? { borderWidth: 1, borderColor: theme.colors.disabledBorder }
       : {};
+  }
+
+  const baseStyle = {
+    backgroundColor,
+    borderRadius: theme.rounded,
+    paddingVertical: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.md,
+    elevation: disabled ? 0 : theme.elevation,
+    opacity: disabled ? 0.6 : 1,
+  };
 
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      style={[
-        {
-          backgroundColor: background,
-          borderRadius: theme.rounded,
-          paddingVertical: theme.spacing.sm,
-          paddingHorizontal: theme.spacing.md,
-          elevation: theme.elevation,
-        },
-        border,
-        style,
-        styles.button,
-      ]}
+      disabled={disabled}
+      style={[baseStyle, borderStyle, styles.button, style]}
       {...props}
     >
-      <Text style={{ color, fontSize: theme.typography.body }}>{title}</Text>
+      <Text style={{ color: textColor, fontSize: theme.typography.body }}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };

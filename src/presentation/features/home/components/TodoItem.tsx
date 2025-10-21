@@ -35,6 +35,9 @@ export const TodoItem = ({
     background: {
       backgroundColor: 'transparent',
     },
+    textColor: {
+      color: item.done ? theme.colors.background : theme.colors.text,
+    },
     left: { flex: 1, marginRight: theme.spacing.sm },
     buttonRow: { flexDirection: 'row', gap: theme.spacing.md },
   }));
@@ -42,11 +45,11 @@ export const TodoItem = ({
   return (
     <TouchableOpacity style={styles.container} onPress={() => onPress(item)}>
       <View style={[styles.left, styles.background]}>
-        <Text>{item.title}</Text>
+        <Text style={styles.textColor}>{item.title}</Text>
       </View>
 
       {item.done ? (
-        <Icon as={Check} />
+        <Icon as={Check} color={styles.textColor.color} />
       ) : (
         <View style={[styles.buttonRow, styles.background]}>
           <Icon as={Pen} onPress={() => onEditPress(item)} />
