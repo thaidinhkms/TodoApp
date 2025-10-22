@@ -1,13 +1,13 @@
-import IStorage from '../contracts/IStorage';
-import IBiometric from '../contracts/IBiometric';
-import { BIOMETRIC_STORE_KEY, USERS_KEY } from '../constants/Keys';
-import { UserRecord } from '../../domain/entities/Auth';
-import { v4 as uuidv4 } from 'uuid';
+import { UserRecord } from '@/domain/entities';
+import { IAuthRepository } from '@/domain/repositories';
+import { IBiometric } from '@/infrastructure/contracts/IBiometric';
+import { IStorage } from '@/infrastructure/contracts/IStorage';
+import { err, ok, Result } from '@/utils/Result';
 import forge from 'node-forge';
-import IAuthService from '../../domain/auth/IAuthService';
-import { err, ok, Result } from '../../common/Result';
+import { v4 as uuidv4 } from 'uuid';
+import { USERS_KEY, BIOMETRIC_STORE_KEY } from '../constants/Keys';
 
-export class AuthService implements IAuthService {
+export class AuthRepositoryImpl implements IAuthRepository {
   constructor(
     private readonly storage: IStorage,
     private readonly biometric: IBiometric,
@@ -22,6 +22,7 @@ export class AuthService implements IAuthService {
   private async writeUsers(users: Record<string, UserRecord>) {
     await this.storage.setObject(USERS_KEY, users);
   }
+
   private async readBiometricStore(): Promise<{
     username: string;
     publicKey: string;
@@ -33,10 +34,6 @@ export class AuthService implements IAuthService {
   }
   private async writeBiometricStore(username: string, publicKey: string) {
     await this.storage.setObject(BIOMETRIC_STORE_KEY, { username, publicKey });
-  }
-
-  async init(): Promise<Result<void>> {
-    return ok();
   }
 
   async register(

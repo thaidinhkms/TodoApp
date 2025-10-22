@@ -1,6 +1,5 @@
-import React from 'react';
+import { useTheme } from '@/presentation/providers';
 import { Text as RNText, TextProps } from 'react-native';
-import { useTheme } from '../providers/ThemeProvider';
 
 export const Text = ({ style, children, ...props }: TextProps) => {
   const { theme } = useTheme();

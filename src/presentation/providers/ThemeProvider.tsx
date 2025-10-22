@@ -1,3 +1,10 @@
+import { container } from '@/di/Container';
+import {
+  darkTheme,
+  lightTheme,
+  type Theme,
+  type ThemeName,
+} from '@/presentation/themes';
 import {
   createContext,
   ReactNode,
@@ -7,9 +14,6 @@ import {
   useState,
 } from 'react';
 import { Appearance, ColorSchemeName, StatusBar, Platform } from 'react-native';
-import { lightTheme, darkTheme } from '../themes/themes';
-import type { Theme, ThemeName } from '../themes/tokens';
-import { useStorage } from './StorageProvider';
 
 const THEME_KEY = 'USER_THEME_PREFERENCE';
 
@@ -23,12 +27,12 @@ type ThemeContextValue = {
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const { storage } = useStorage();
-
   const [preferenceState, setPreferenceState] = useState<ThemeName>('system');
   const [systemScheme, setSystemScheme] = useState<ColorSchemeName>(
     Appearance.getColorScheme() ?? 'unspecified',
   );
+
+  const storage = container.resolve("STORAGE");
 
   useEffect(() => {
     (async () => {
@@ -40,7 +44,8 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       setSystemScheme(colorScheme),
     );
     return () => sub.remove();
-  }, [storage]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const resolvedSystemScheme: 'light' | 'dark' =
     systemScheme === 'dark' ? 'dark' : 'light';

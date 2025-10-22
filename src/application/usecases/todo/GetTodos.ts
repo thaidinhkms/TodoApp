@@ -1,7 +1,7 @@
-import ITodoRepository from '../../../domain/repositories/ITodoRepository';
-import { Todo } from '../../../domain/entities/Todo';
+import { Todo } from '@/domain/entities/Todo';
+import { ITodoRepository } from '@/domain/repositories/ITodoRepository';
 
-export default class GetTodos {
+export class GetTodos {
   constructor(private readonly repo: ITodoRepository) {}
   async execute(): Promise<Todo[]> {
     return this.repo.getAll();

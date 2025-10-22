@@ -1,14 +1,7 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { container } from '../../common/Container';
-import { UserRecord } from '../../domain/entities/Auth';
-import { Result } from '../../common/Result';
+import { container } from '@/di/Container';
+import { UserRecord } from '@/domain/entities/Auth';
+import { Result } from '@/utils/Result';
+import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 
 export interface AuthContextValue {
   authenticated: boolean;
@@ -32,20 +25,13 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const authService = container.resolve('AUTH_SERVICE');
-  const loginWithCredentialsUC = container.resolve('LOGIN_WITH_CREDENTIALS');
   const loginWithBiometricsUC = container.resolve('LOGIN_WITH_BIOMETRICS');
+  const loginWithCredentialsUC = container.resolve('LOGIN_WITH_CREDENTIALS');
+  const logoutUC = container.resolve('LOGOUT');
   const registerUC = container.resolve('REGISTER');
   const registerBiometricsUC = container.resolve('REGISTER_BIOMETRIC');
-  const logoutUC = container.resolve('LOGOUT');
 
   const [authenticated, setAuthenticated] = useState<boolean>(false);
-
-  useEffect(() => {
-    (async () => {
-      await authService.init();
-    })();
-  }, [authService]);
 
   const value = useMemo<AuthContextValue>(() => {
     const loginWithCredentials = async (username: string, password: string) => {

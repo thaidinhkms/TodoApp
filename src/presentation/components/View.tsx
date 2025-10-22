@@ -1,6 +1,5 @@
-import React from 'react';
+import { useTheme } from '@/presentation/providers';
 import { View as RNView, ViewProps } from 'react-native';
-import { useTheme } from '../providers/ThemeProvider';
 
 export const View = ({ style, ...props }: ViewProps) => {
   const { theme } = useTheme();

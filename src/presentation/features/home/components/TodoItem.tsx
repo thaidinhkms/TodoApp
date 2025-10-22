@@ -1,9 +1,6 @@
-import React from 'react';
-import { useThemedStyles } from '../../../themes/useThemedStyle';
-import type { Todo } from '../../../../domain/entities/Todo';
-import { Text } from '../../../components/Text';
-import { View } from '../../../components/View';
-import { Icon } from '../../../components/Icon';
+import { Todo } from '@/domain/entities';
+import { Icon, Text, View } from '@/presentation/components';
+import { useThemedStyles } from '@/presentation/themes';
 import { Check, Pen, Trash } from 'lucide-react-native';
 import { TouchableOpacity } from 'react-native';
 

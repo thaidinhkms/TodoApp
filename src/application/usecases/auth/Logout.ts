@@ -1,8 +1,8 @@
-import { Result } from '../../../common/Result';
-import IAuthService from '../../../domain/auth/IAuthService';
+import { IAuthRepository } from '@/domain/repositories/IAuthRepository';
+import { Result } from '@/utils/Result';
 
-export default class Logout {
-  constructor(private readonly auth: IAuthService) {}
+export class Logout {
+  constructor(private readonly auth: IAuthRepository) {}
   async execute(): Promise<Result<void>> {
     return await this.auth.logout();
   }

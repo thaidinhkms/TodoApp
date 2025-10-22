@@ -1,5 +1,5 @@
+import { IStorage } from '@/infrastructure/contracts/IStorage';
 import { MMKV } from 'react-native-mmkv';
-import IStorage from '../contracts/IStorage';
 
 export class MMKVStorage implements IStorage {
   storage = new MMKV({

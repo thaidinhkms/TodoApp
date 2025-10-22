@@ -1,8 +1,7 @@
-import { Result } from '../../common/Result';
-import { UserRecord } from '../entities/Auth';
+import { UserRecord } from '@/domain/entities/Auth';
+import { Result } from '@/utils/Result';
 
-export default interface IAuthService {
-  init(): Promise<Result<void>>;
+export interface IAuthRepository {
   register(username: string, password: string): Promise<Result<UserRecord>>;
   registerBiometrics(username: string): Promise<Result<void>>;
   loginWithCredentials(

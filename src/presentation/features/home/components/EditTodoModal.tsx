@@ -1,11 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Modal, Platform, KeyboardAvoidingView, Alert } from 'react-native';
-import { useThemedStyles } from '../../../themes/useThemedStyle';
-import { TextInput } from '../../../components/TextInput';
-import { Button } from '../../../components/Button';
-import { Text } from '../../../components/Text';
-import type { Todo } from '../../../../domain/entities/Todo';
-import { View } from '../../../components/View';
+import { Todo } from '@/domain/entities';
+import { Button, Text, TextInput, View } from '@/presentation/components';
+import { useThemedStyles } from '@/presentation/themes';
+import { useEffect, useRef, useState } from 'react';
+import { Alert, KeyboardAvoidingView, Modal, Platform } from 'react-native';
 
 type Props = {
   visible: boolean;

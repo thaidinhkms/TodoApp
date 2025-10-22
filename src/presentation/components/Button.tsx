@@ -1,11 +1,10 @@
-import React from 'react';
+import { useTheme } from '@/presentation/providers';
 import {
   TouchableOpacity,
   Text,
   TouchableOpacityProps,
   StyleSheet,
 } from 'react-native';
-import { useTheme } from '../providers/ThemeProvider';
 
 type Props = TouchableOpacityProps & {
   title: string;

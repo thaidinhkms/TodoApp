@@ -1,6 +1,6 @@
-import { Todo } from '../entities/Todo';
+import { Todo } from '@/domain/entities/Todo';
 
-export default interface ITodoRepository {
+export interface ITodoRepository {
   getAll(): Promise<Todo[]>;
   add(todo: Todo): Promise<void>;
   update(todo: Todo): Promise<void>;

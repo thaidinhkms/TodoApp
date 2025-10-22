@@ -1,6 +1,5 @@
-import React from 'react';
-import { type LucideProps } from 'lucide-react-native';
-import { useTheme } from '../providers/ThemeProvider';
+import { useTheme } from '@/presentation/providers';
+import { LucideProps } from 'lucide-react-native';
 
 type ColorVariant = 'text' | 'primary' | 'muted' | 'success' | 'danger';
 

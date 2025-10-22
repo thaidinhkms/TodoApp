@@ -1,9 +1,9 @@
-import { Result } from '../../../common/Result';
-import IAuthService from '../../../domain/auth/IAuthService';
-import { UserRecord } from '../../../domain/entities/Auth';
+import { UserRecord } from '@/domain/entities/Auth';
+import { IAuthRepository } from '@/domain/repositories/IAuthRepository';
+import { Result } from '@/utils/Result';
 
-export default class Register {
-  constructor(private readonly auth: IAuthService) {}
+export class Register {
+  constructor(private readonly auth: IAuthRepository) {}
   async execute(
     username: string,
     password: string,

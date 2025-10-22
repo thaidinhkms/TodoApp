@@ -1,4 +1,4 @@
-import IBiometric from '../contracts/IBiometric';
+import { IBiometric } from '@/infrastructure/contracts/IBiometric';
 import ReactNativeBiometrics from 'react-native-biometrics';
 
 export class RNBiometrics implements IBiometric {

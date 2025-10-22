@@ -1,11 +1,11 @@
-import React from 'react';
+import { useTheme } from '@/presentation/providers';
+import { forwardRef } from 'react';
 import {
   TextInput as RNTextInput,
   TextInputProps,
   ViewStyle,
   TextStyle,
 } from 'react-native';
-import { useTheme } from '../providers/ThemeProvider';
 
 type Variant = 'outlined' | 'filled' | 'underlined';
 type Size = 'small' | 'medium' | 'large';
@@ -16,7 +16,7 @@ export type InputProps = TextInputProps & {
   containerStyle?: ViewStyle;
 };
 
-export const TextInput = React.forwardRef<RNTextInput, InputProps>(
+export const TextInput = forwardRef<RNTextInput, InputProps>(
   (
     {
       variant = 'outlined',
@@ -29,19 +29,22 @@ export const TextInput = React.forwardRef<RNTextInput, InputProps>(
   ) => {
     const { theme } = useTheme();
 
-    const fontSize =
-      size === 'small'
-        ? theme.typography.small
-        : size === 'large'
-        ? theme.typography.h2
-        : theme.typography.body;
+    let fontSize;
+    let padding;
 
-    const padding =
-      size === 'small'
-        ? theme.spacing.xs
-        : size === 'large'
-        ? theme.spacing.lg
-        : theme.spacing.md;
+    switch (size) {
+      case 'small':
+        fontSize = theme.typography.small;
+        padding = theme.spacing.xs;
+        break;
+      case 'large':
+        fontSize = theme.typography.h2;
+        padding = theme.spacing.lg;
+        break;
+      default:
+        fontSize = theme.typography.body;
+        padding = theme.spacing.md;
+    }
 
     const baseStyle: TextStyle = {
       color: theme.colors.text,

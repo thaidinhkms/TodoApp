@@ -1,79 +1,31 @@
-import React from 'react';
-import {
-  NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
-  useNavigation,
-} from '@react-navigation/native';
-import {
-  createNativeStackNavigator,
-  NativeStackNavigationProp,
-} from '@react-navigation/native-stack';
-import AuthScreen from '../features/auth/screens/Auth';
-import { useTheme } from '../providers/ThemeProvider';
-import { useAuth } from '../providers/AuthProvider';
-import HomeScreen from '../features/home/screens/Home';
-import SettingScreen from '../features/setting/screens/Setting';
-import { Cog } from 'lucide-react-native';
-import { Icon } from '../components/Icon';
+import { HomeScreen } from '@/presentation/features/home/screens/Home';
+import { SettingScreen } from '@/presentation/features/setting/screens/Setting';
+import { SettingButton } from '@/presentation/components/SettingButton';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export type RootStackParamList = {
-  Auth: undefined;
+export type MainStackParamList = {
   Home: undefined;
   Setting: undefined;
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<MainStackParamList>();
 
-function SettingButton() {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList, 'Home'>>();
-  return <Icon as={Cog} onPress={() => navigation.navigate('Setting')} />;
-}
-
-export default function MainStack() {
-  const { theme } = useTheme();
-  const { authenticated } = useAuth();
-
-  const navTheme = {
-    ...DefaultTheme,
-    dark: theme.name === 'dark',
-    colors: {
-      ...(theme.name === 'dark' ? DarkTheme.colors : DefaultTheme.colors),
-      background: theme.colors.background,
-      card: theme.colors.surface,
-      text: theme.colors.text,
-      border: theme.colors.border,
-    },
-  };
-
+export function MainStack() {
   return (
-    <NavigationContainer theme={navTheme}>
-      <Stack.Navigator initialRouteName={authenticated ? 'Home' : 'Auth'}>
-        {authenticated ? (
-          <>
-            <Stack.Screen
-              name="Home"
-              component={HomeScreen}
-              options={{
-                title: 'Todos',
-                headerRight: SettingButton,
-              }}
-            />
-            <Stack.Screen
-              name="Setting"
-              component={SettingScreen}
-              options={{ title: 'Setting' }}
-            />
-          </>
-        ) : (
-          <Stack.Screen
-            name="Auth"
-            component={AuthScreen}
-            options={{ headerShown: false }}
-          />
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator initialRouteName={'Home'}>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          title: 'Todos',
+          headerRight: SettingButton,
+        }}
+      />
+      <Stack.Screen
+        name="Setting"
+        component={SettingScreen}
+        options={{ title: 'Setting' }}
+      />
+    </Stack.Navigator>
   );
 }

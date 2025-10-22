@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
-import { Alert, TouchableOpacity } from 'react-native';
-import { Button } from '../../../components/Button';
-import { View } from '../../../components/View';
-import { Text } from '../../../components/Text';
-import { useAuth } from '../../../providers/AuthProvider';
-import { useThemedStyles } from '../../../themes/useThemedStyle';
-import { Icon } from '../../../components/Icon';
+import { container } from '@/di/Container';
+import { Button, Icon, Text, View } from '@/presentation/components';
+import { useAuth } from '@/presentation/providers';
+import { useThemedStyles } from '@/presentation/themes';
 import { ChevronRight } from 'lucide-react-native';
+import { useState } from 'react';
+import { Alert, TouchableOpacity } from 'react-native';
 import { ThemeModal } from '../components/ThemeModal';
-import { useStorage } from '../../../providers/StorageProvider';
 
-export default function SettingScreen() {
+export function SettingScreen() {
   const styles = useThemedStyles(theme => ({
     container: { flex: 1, padding: theme.spacing.md, gap: theme.spacing.sm },
     row: { flexDirection: 'row', gap: theme.spacing.sm },
@@ -33,7 +30,6 @@ export default function SettingScreen() {
   }));
 
   const { logout } = useAuth();
-  const { storage } = useStorage();
   const [modalVisible, setModalVisible] = useState(false);
 
   const onLogout = async () => {
@@ -42,6 +38,8 @@ export default function SettingScreen() {
       Alert.alert('Log out failed', result.error.message);
     }
   };
+
+  const storage = container.resolve("STORAGE");
 
   const onClearStorage = async () => {
     await storage.clearAll();

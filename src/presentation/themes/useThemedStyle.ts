@@ -1,5 +1,5 @@
-import { StyleSheet, ViewStyle, TextStyle, ImageStyle } from 'react-native';
-import { useTheme } from '../providers/ThemeProvider';
+import { useTheme } from '@/presentation/providers/ThemeProvider';
+import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 type RNStyle = ViewStyle | TextStyle | ImageStyle;
 type NamedStyles<T> = { [P in keyof T]: RNStyle };

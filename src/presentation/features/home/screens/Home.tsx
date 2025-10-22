@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, Alert } from 'react-native';
-import { useThemedStyles } from '../../../themes/useThemedStyle';
-import { Button } from '../../../components/Button';
-import { View } from '../../../components/View';
-import { TextInput } from '../../../components/TextInput';
-import { Todo } from '../../../../domain/entities/Todo';
-import { TodoProvider, useTodo } from '../../../providers/TodoProvider';
+import { Todo } from '@/domain/entities';
+import { Button, TextInput, View } from '@/presentation/components';
+import { TodoProvider, useTodo } from '@/presentation/providers';
+import { useThemedStyles } from '@/presentation/themes';
+import { useEffect, useState } from 'react';
+import { Alert, FlatList } from 'react-native';
 import { EditTodoModal } from '../components/EditTodoModal';
 import { TodoItem } from '../components/TodoItem';
 
-export default function HomeScreen() {
+export function HomeScreen() {
   return (
     <TodoProvider>
       <Home />

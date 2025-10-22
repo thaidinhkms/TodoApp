@@ -1,16 +1,13 @@
+import { Button, Text, View } from '@/presentation/components';
+import { useTheme } from '@/presentation/providers';
+import { ThemeName, useThemedStyles } from '@/presentation/themes';
 import React from 'react';
 import {
+  KeyboardAvoidingView,
   Modal,
   Platform,
-  KeyboardAvoidingView,
   TouchableOpacity,
 } from 'react-native';
-import { Button } from '../../../components/Button';
-import { View } from '../../../components/View';
-import { Text } from '../../../components/Text';
-import { useThemedStyles } from '../../../themes/useThemedStyle';
-import { useTheme } from '../../../providers/ThemeProvider';
-import { ThemeName } from '../../../themes/tokens';
 
 type ThemeModalProps = {
   visible: boolean;

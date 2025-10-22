@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
-import { useThemedStyles } from '../../../themes/useThemedStyle';
-import { Button } from '../../../components/Button';
-import { View } from '../../../components/View';
-import { Text } from '../../../components/Text';
-import { useAuth } from '../../../providers/AuthProvider';
+import { Button, Text, TextInput, View } from '@/presentation/components';
+import { useAuth } from '@/presentation/providers';
+import { useThemedStyles } from '@/presentation/themes';
+import { useState } from 'react';
 import { Alert } from 'react-native';
-import { TextInput } from '../../../components/TextInput';
 
-export default function AuthScreen() {
+export function AuthScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
