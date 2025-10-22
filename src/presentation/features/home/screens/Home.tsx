@@ -1,22 +1,17 @@
 import { Todo } from '@/domain/entities';
 import { Button, TextInput, View } from '@/presentation/components';
-import { TodoProvider, useTodo } from '@/presentation/providers';
+import { useTodo } from '@/presentation/store';
 import { useThemedStyles } from '@/presentation/themes';
-import { useEffect, useState } from 'react';
-import { Alert, FlatList } from 'react-native';
+import { useEffect, useState, useCallback } from 'react';
+import { Alert, FlatList, RefreshControl } from 'react-native';
 import { EditTodoModal } from '../components/EditTodoModal';
 import { TodoItem } from '../components/TodoItem';
 
 export function HomeScreen() {
-  return (
-    <TodoProvider>
-      <Home />
-    </TodoProvider>
-  );
+  return <Home />;
 }
 
 function Home() {
-  const [todos, setTodos] = useState<Todo[]>([]);
   const [text, setText] = useState('');
   const [editing, setEditing] = useState<Todo | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -31,29 +26,53 @@ function Home() {
     },
   }));
 
-  const { getTodos, createTodo, editTodo, deleteTodo } = useTodo();
+  const { data, loading, error, fetch, create, edit, remove } = useTodo();
 
   useEffect(() => {
-    (async () => setTodos(await getTodos.execute()))();
-  }, [getTodos]);
+    (async () => {
+      const res = await fetch();
+      if (!res.ok) {
+        Alert.alert('Error', res.error?.message ?? 'Failed to load todos');
+      }
+    })();
+  }, [fetch]);
 
-  const refresh = async () => setTodos(await getTodos.execute());
+  useEffect(() => {
+    if (error) {
+      Alert.alert('Error', error.message);
+    }
+  }, [error]);
+
+  const refresh = useCallback(async () => {
+    const res = await fetch();
+    if (!res.ok) {
+      Alert.alert('Error', res.error?.message ?? 'Failed to refresh todos');
+    }
+  }, [fetch]);
 
   const onAdd = async () => {
     if (!text.trim()) return;
-    await createTodo.execute(new Todo(text));
-    setText('');
-    await refresh();
+    const todo = new Todo(text.trim());
+    const res = await create(todo);
+    if (res.ok) {
+      setText('');
+    } else {
+      Alert.alert('Error', res.error?.message ?? 'Failed to create todo');
+    }
   };
 
   const onDelete = async (item: Todo) => {
-    await deleteTodo.execute(item);
-    await refresh();
+    const res = await remove(item);
+    if (!res.ok) {
+      Alert.alert('Error', res.error?.message ?? 'Failed to delete todo');
+    }
   };
 
   const toggleDone = async (item: Todo) => {
-    await editTodo.execute({ ...item, done: !item.done });
-    await refresh();
+    const res = await edit({ ...item, done: !item.done });
+    if (!res.ok) {
+      Alert.alert('Error', res.error?.message ?? 'Failed to update todo');
+    }
   };
 
   const openEdit = (item: Todo) => {
@@ -67,8 +86,12 @@ function Home() {
   };
 
   const onEdit = async (updated: Todo) => {
-    await editTodo.execute(updated);
-    await refresh();
+    const res = await edit(updated);
+    if (res.ok) {
+      closeModal();
+    } else {
+      Alert.alert('Error', res.error?.message ?? 'Failed to save todo');
+    }
   };
 
   const handleDelete = async (item: Todo) => {
@@ -96,11 +119,18 @@ function Home() {
         style={styles.input}
         placeholderTextColor="#888"
       />
-      <Button title="Add Todo" onPress={onAdd} disabled={!text.length} />
+      <Button
+        title="Add Todo"
+        onPress={onAdd}
+        disabled={!text.trim().length || loading}
+      />
 
       <FlatList
-        data={todos}
+        data={data}
         keyExtractor={i => i.id}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={refresh} />
+        }
         renderItem={({ item }) => (
           <TodoItem
             item={item}

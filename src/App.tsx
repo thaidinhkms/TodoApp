@@ -1,5 +1,6 @@
 import React from 'react';
 import 'react-native-get-random-values';
+import { Provider } from 'react-redux';
 import {
   DefaultTheme,
   DarkTheme,
@@ -8,22 +9,19 @@ import {
 
 import { AuthStack } from '@/presentation/navigations/AuthStack';
 import { MainStack } from '@/presentation/navigations/MainStack';
-import { AuthProvider, useAuth } from '@/presentation/providers/AuthProvider';
 import {
   ThemeProvider,
   useTheme,
 } from '@/presentation/providers/ThemeProvider';
-import { TodoProvider } from '@/presentation/providers/TodoProvider';
+import { store, useAuth } from '@/presentation/store';
 
 export function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <TodoProvider>
-          <AppContent />
-        </TodoProvider>
-      </AuthProvider>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
+        <AppContent />
+      </ThemeProvider>
+    </Provider>
   );
 }
 
@@ -44,6 +42,7 @@ function AppContent() {
   };
 
   return (
+    
     <NavigationContainer theme={navTheme}>
       {authenticated ? <MainStack /> : <AuthStack />}
     </NavigationContainer>

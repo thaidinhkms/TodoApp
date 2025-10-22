@@ -32,7 +32,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     Appearance.getColorScheme() ?? 'unspecified',
   );
 
-  const storage = container.resolve("STORAGE");
+  const storage = container.resolve('STORAGE');
 
   useEffect(() => {
     (async () => {
@@ -44,7 +44,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       setSystemScheme(colorScheme),
     );
     return () => sub.remove();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const resolvedSystemScheme: 'light' | 'dark' =

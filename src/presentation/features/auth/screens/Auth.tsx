@@ -1,5 +1,5 @@
 import { Button, Text, TextInput, View } from '@/presentation/components';
-import { useAuth } from '@/presentation/providers';
+import { useAuth } from '@/presentation/store';
 import { useThemedStyles } from '@/presentation/themes';
 import { useState } from 'react';
 import { Alert } from 'react-native';

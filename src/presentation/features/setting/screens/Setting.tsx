@@ -1,6 +1,6 @@
 import { container } from '@/di/Container';
 import { Button, Icon, Text, View } from '@/presentation/components';
-import { useAuth } from '@/presentation/providers';
+import { useAuth } from '@/presentation/store';
 import { useThemedStyles } from '@/presentation/themes';
 import { ChevronRight } from 'lucide-react-native';
 import { useState } from 'react';
@@ -39,7 +39,7 @@ export function SettingScreen() {
     }
   };
 
-  const storage = container.resolve("STORAGE");
+  const storage = container.resolve('STORAGE');
 
   const onClearStorage = async () => {
     await storage.clearAll();

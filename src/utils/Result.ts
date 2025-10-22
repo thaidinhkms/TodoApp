@@ -16,3 +16,7 @@ export const err = <T>(error: AppError | string): Result<T> => {
   }
   return { ok: false, error };
 };
+export const toAppError = (error: unknown): AppError =>
+  typeof error === 'object' && error !== null && 'message' in error
+    ? (error as AppError)
+    : { message: 'Unexpected error' };
