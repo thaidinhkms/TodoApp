@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './AuthSlice';
-import todoReducer from './TodoSlice';
+import authReducer from './auth/Slice';
+import todoReducer from './todo/Slice';
 
 export const store = configureStore({
   reducer: {
@@ -9,8 +9,8 @@ export const store = configureStore({
   },
 });
 
-export * from './AuthSlice';
-export * from './TodoSlice';
+export * from './auth';
+export * from './todo';
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

@@ -9,7 +9,8 @@ export function AuthScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const { loading, loginWithCredentials, loginWithBiometrics, register } = useAuth();
+  const { loading, loginWithCredentials, loginWithBiometrics, register } =
+    useAuth();
 
   const styles = useThemedStyles(theme => ({
     container: {
