@@ -1,4 +1,5 @@
 import { Button, Text, TextInput, View } from '@/presentation/components';
+import { Loading } from '@/presentation/components/Loading';
 import { useAuth } from '@/presentation/store';
 import { useThemedStyles } from '@/presentation/themes';
 import { useState } from 'react';
@@ -8,7 +9,7 @@ export function AuthScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const { loginWithCredentials, loginWithBiometrics, register } = useAuth();
+  const { loading, loginWithCredentials, loginWithBiometrics, register } = useAuth();
 
   const styles = useThemedStyles(theme => ({
     container: {
@@ -23,6 +24,7 @@ export function AuthScreen() {
       borderRadius: theme.rounded,
       marginBottom: theme.spacing.sm,
     },
+
     row: { flexDirection: 'row', gap: theme.spacing.sm },
   }));
 
@@ -49,6 +51,7 @@ export function AuthScreen() {
 
   return (
     <View style={styles.container}>
+      <Loading visible={loading} message="Please wait..." />
       <Text>Authentication</Text>
       <TextInput
         value={username}

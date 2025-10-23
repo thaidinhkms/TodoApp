@@ -42,7 +42,6 @@ function AppContent() {
   };
 
   return (
-    
     <NavigationContainer theme={navTheme}>
       {authenticated ? <MainStack /> : <AuthStack />}
     </NavigationContainer>

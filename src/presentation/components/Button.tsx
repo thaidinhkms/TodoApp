@@ -4,18 +4,21 @@ import {
   Text,
   TouchableOpacityProps,
   StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 
 type Props = TouchableOpacityProps & {
   title: string;
   variant?: 'primary' | 'danger';
   type?: 'contained' | 'outlined';
+  loading?: boolean;
 };
 
 export const Button = ({
   title,
   variant = 'primary',
   type = 'contained',
+  loading = false,
   style,
   disabled,
   ...props
@@ -35,8 +38,10 @@ export const Button = ({
     : {};
 
   // Apply universal disabled style
-  if (disabled) {
-    backgroundColor = theme.colors.disabledBackground ?? theme.colors.border;
+  const isDisabled = disabled || loading;
+
+  if (isDisabled) {
+    backgroundColor = theme.colors.disabledBackground;
     textColor = theme.colors.disabledText;
     borderStyle = isOutlined
       ? { borderWidth: 1, borderColor: theme.colors.disabledBorder }
@@ -48,20 +53,27 @@ export const Button = ({
     borderRadius: theme.rounded,
     paddingVertical: theme.spacing.sm,
     paddingHorizontal: theme.spacing.md,
-    elevation: disabled ? 0 : theme.elevation,
-    opacity: disabled ? 0.6 : 1,
+    elevation: isDisabled ? 0 : theme.elevation,
+    opacity: isDisabled ? 0.6 : 1,
   };
 
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      disabled={disabled}
+      disabled={isDisabled}
       style={[baseStyle, borderStyle, styles.button, style]}
       {...props}
     >
-      <Text style={{ color: textColor, fontSize: theme.typography.body }}>
-        {title}
-      </Text>
+      {loading ? (
+        <ActivityIndicator
+          size="small"
+          color={isContained ? theme.colors.background : variantColor}
+        />
+      ) : (
+        <Text style={{ color: textColor, fontSize: theme.typography.body }}>
+          {title}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };
@@ -70,5 +82,6 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
   },
 });
