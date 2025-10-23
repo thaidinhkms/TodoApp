@@ -2,7 +2,7 @@ import { Todo } from '@/domain/entities';
 import { Result } from '@/utils/Result';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '..';
+import type { AppDispatch, RootState } from '..';
 import { fetchTodos, createTodo, editTodo, deleteTodo } from './Thunks';
 
 export const useTodo = () => {
